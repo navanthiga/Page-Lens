@@ -9,6 +9,8 @@ import base64
 import zipfile
 import shutil
 from pdf2image import convert_from_path
+
+os.environ["PLAYWRIGHT_BROWSERS_PATH"] = "/root/.cache/ms-playwright"
 GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY", "")
 app = Flask(__name__)
 CORS(app)
