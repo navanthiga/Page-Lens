@@ -34,26 +34,28 @@
     .logo i { color: white; font-size: 18px; }
     .brand { font-size: 20px; font-weight: 700; letter-spacing: -0.5px; }
     .brand span { color: #888; font-weight: 400; }
-    .tab-btn {
-        background: none;
-        border: none;
-        padding: 8px 16px;
-        font-family: 'Syne', sans-serif;
-        font-size: 13px;
-        font-weight: 500;
-        color: #aaa;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        gap: 6px;
-        border-bottom: 2px solid transparent;
-        margin-bottom: -0.5px;
-        }
 
-        .tab-btn.active {
-        color: #1a1a1a;
-        border-bottom: 2px solid #1a1a1a;
-        }
+    .tab-btn {
+      background: none;
+      border: none;
+      padding: 8px 16px;
+      font-family: 'Syne', sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      color: #aaa;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -0.5px;
+    }
+
+    .tab-btn.active {
+      color: #1a1a1a;
+      border-bottom: 2px solid #1a1a1a;
+    }
+
     .card {
       background: white;
       border: 0.5px solid #e0e0e0;
@@ -73,7 +75,7 @@
 
     .input-row { display: flex; gap: 10px; align-items: center; }
 
-    input[type="text"], input[type="password"] {
+    input[type="text"] {
       flex: 1;
       background: #f5f4f0;
       border: 0.5px solid #e0e0e0;
@@ -231,82 +233,77 @@
 </head>
 <body>
 
- <div class="header">
-  <div class="logo"><i class="ti ti-scan-eye"></i></div>
-  <div class="brand">PageLens <span>/ ui auditor</span></div>
-</div>
-
-<div style="margin-bottom: 2rem;">
-  <p style="font-size: 14px; color: #555; line-height: 1.7;">
-    Your users judge your UI in <strong>0.05 seconds</strong> — make sure it holds up. 
-    PageLens uses AI to catch accessibility failures, visual chaos, and usability blind spots 
-    before they cost you real users. Drop a URL, upload your project, or paste a screenshot. 
-    Results in seconds.
-  </p>
-</div>
-
-
-  <div class="card">
-  <div style="display:flex; gap:0; margin-bottom:1.25rem; border-bottom:0.5px solid #e0e0e0;">
-    <button class="tab-btn active" id="tabUrl" onclick="switchTab('url')">
-      <i class="ti ti-link"></i> URL
-    </button>
-    <button class="tab-btn" id="tabImage" onclick="switchTab('image')">
-        <i class="ti ti-photo"></i> Screenshot
-    </button>
-    <button class="tab-btn" id="tabFile" onclick="switchTab('file')">
-      <i class="ti ti-file-code"></i> HTML File
-    </button>
+  <div class="header">
+    <div class="logo"><i class="ti ti-scan-eye"></i></div>
+    <div class="brand">PageLens <span>/ ui auditor</span></div>
   </div>
 
-  <div id="urlMode">
-    <div class="input-label">Website URL</div>
-    <div class="input-row">
-      <input type="text" id="urlInput" placeholder="https://example.com" />
-      <button class="btn" id="analyzeBtn" onclick="startAnalysis()">
+  <div style="margin-bottom: 2rem;">
+    <p style="font-size: 14px; color: #555; line-height: 1.7;">
+      Your users judge your UI in <strong>0.05 seconds</strong> — make sure it holds up.
+      PageLens uses AI to catch accessibility failures, visual chaos, and usability blind spots
+      before they cost you real users. Drop a URL, upload your project, or paste a screenshot.
+      Results in seconds.
+    </p>
+  </div>
+
+  <div class="card">
+    <div style="display:flex; gap:0; margin-bottom:1.25rem; border-bottom:0.5px solid #e0e0e0;">
+      <button class="tab-btn active" id="tabUrl" onclick="switchTab('url')">
+        <i class="ti ti-link"></i> URL
+      </button>
+      <button class="tab-btn" id="tabImage" onclick="switchTab('image')">
+        <i class="ti ti-photo"></i> Screenshot
+      </button>
+      <button class="tab-btn" id="tabFile" onclick="switchTab('file')">
+        <i class="ti ti-file-code"></i> HTML File
+      </button>
+    </div>
+
+    <div id="urlMode">
+      <div class="input-label">Website URL</div>
+      <div class="input-row">
+        <input type="text" id="urlInput" placeholder="https://example.com" />
+        <button class="btn" id="analyzeBtn" onclick="startAnalysis()">
+          <i class="ti ti-sparkles"></i> Analyze
+        </button>
+      </div>
+    </div>
+
+    <div id="fileMode" class="hidden">
+      <div class="input-label">Upload single file or entire project folder</div>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:10px;">
+        <div style="border:1.5px dashed #e0e0e0; border-radius:8px; padding:1.25rem; text-align:center; cursor:pointer;" onclick="document.getElementById('fileInput').click()">
+          <i class="ti ti-file-code" style="font-size:24px; color:#aaa;"></i>
+          <p style="font-size:12px; color:#aaa; margin-top:6px;">Single HTML file</p>
+          <p style="font-size:11px; color:#ccc; margin-top:4px; font-family:'DM Mono',monospace;" id="fileLabel">No file selected</p>
+        </div>
+        <div style="border:1.5px dashed #e0e0e0; border-radius:8px; padding:1.25rem; text-align:center; cursor:pointer;" onclick="document.getElementById('folderInput').click()">
+          <i class="ti ti-folder-open" style="font-size:24px; color:#aaa;"></i>
+          <p style="font-size:12px; color:#aaa; margin-top:6px;">Project folder</p>
+          <p style="font-size:11px; color:#ccc; margin-top:4px; font-family:'DM Mono',monospace;" id="folderLabel">No folder selected</p>
+        </div>
+      </div>
+      <input type="file" id="fileInput" accept=".html" style="display:none" onchange="updateFileLabel()" />
+      <input type="file" id="folderInput" webkitdirectory multiple style="display:none" onchange="updateFolderLabel()" />
+      <button class="btn" style="width:100%; justify-content:center;" id="analyzeBtnFile" onclick="startLocalAnalysis()">
         <i class="ti ti-sparkles"></i> Analyze
       </button>
     </div>
-  </div>
 
-  <div id="fileMode" class="hidden">
-    <div class="input-label">Upload single file or entire project folder</div>
-
-    <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:10px;">
-
-        <div style="border:1.5px dashed #e0e0e0; border-radius:8px; padding:1.25rem; text-align:center; cursor:pointer;" onclick="document.getElementById('fileInput').click()">
-        <i class="ti ti-file-code" style="font-size:24px; color:#aaa;"></i>
-        <p style="font-size:12px; color:#aaa; margin-top:6px;">Single HTML file</p>
-        <p style="font-size:11px; color:#ccc; margin-top:4px; font-family:'DM Mono',monospace;" id="fileLabel">No file selected</p>
-        </div>
-
-        <div style="border:1.5px dashed #e0e0e0; border-radius:8px; padding:1.25rem; text-align:center; cursor:pointer;" onclick="document.getElementById('folderInput').click()">
-        <i class="ti ti-folder-open" style="font-size:24px; color:#aaa;"></i>
-        <p style="font-size:12px; color:#aaa; margin-top:6px;">Project folder</p>
-        <p style="font-size:11px; color:#ccc; margin-top:4px; font-family:'DM Mono',monospace;" id="folderLabel">No folder selected</p>
-        </div>
-
-    </div>
-
-    <input type="file" id="fileInput" accept=".html" style="display:none" onchange="updateFileLabel()" />
-    <input type="file" id="folderInput" webkitdirectory multiple style="display:none" onchange="updateFolderLabel()" />
-
-    <button class="btn" style="width:100%; justify-content:center;" id="analyzeBtnFile" onclick="startLocalAnalysis()">
-        <i class="ti ti-sparkles"></i> Analyze
-    </button>
-    </div>
     <div id="imageMode" class="hidden">
-  <div class="input-label">Upload a screenshot</div>
-  <div style="border:1.5px dashed #e0e0e0; border-radius:8px; padding:1.5rem; text-align:center; cursor:pointer;" onclick="document.getElementById('imageInput').click()">
-    <i class="ti ti-photo-up" style="font-size:28px; color:#aaa;"></i>
-    <p style="font-size:13px; color:#aaa; margin-top:8px;">Click to upload PDF, PNG, JPG, or WEBP</p>
-    <p style="font-size:11px; color:#ccc; margin-top:4px; font-family:'DM Mono',monospace;" id="imageLabel">No image selected</p>
+      <div class="input-label">Upload a screenshot</div>
+      <div style="border:1.5px dashed #e0e0e0; border-radius:8px; padding:1.5rem; text-align:center; cursor:pointer;" onclick="document.getElementById('imageInput').click()">
+        <i class="ti ti-photo-up" style="font-size:28px; color:#aaa;"></i>
+        <p style="font-size:13px; color:#aaa; margin-top:8px;">Click to upload PDF, PNG, JPG, or WEBP</p>
+        <p style="font-size:11px; color:#ccc; margin-top:4px; font-family:'DM Mono',monospace;" id="imageLabel">No image selected</p>
+      </div>
+      <input type="file" id="imageInput" accept=".png,.jpg,.jpeg,.webp,.pdf" style="display:none" onchange="updateImageLabel()" />
+      <button class="btn" style="width:100%; justify-content:center; margin-top:10px;" onclick="startImageAnalysis()">
+        <i class="ti ti-sparkles"></i> Analyze Screenshot
+      </button>
+    </div>
   </div>
-  <input type="file" id="imageInput" accept=".png,.jpg,.jpeg,.webp,.pdf" style="display:none" onchange="updateImageLabel()" />
-  <button class="btn" style="width:100%; justify-content:center; margin-top:10px;" onclick="startImageAnalysis()">
-    <i class="ti ti-sparkles"></i> Analyze Screenshot
-  </button>
-</div>
 
   <div class="state" id="stateIdle">
     <i class="ti ti-layout-dashboard"></i>
@@ -350,250 +347,241 @@
       </div>
       <div id="positivesList"></div>
     </div>
-  </div>
-  <div class="card hidden" id="screenshotCard">
-    <div class="section-title">
+
+    <div class="card hidden" id="screenshotCard">
+      <div class="section-title">
         <i class="ti ti-camera"></i> Screenshot captured
-    </div>
-    <div style="margin-top: 0.5rem;">
+      </div>
+      <div style="margin-top: 0.5rem;">
         <img id="screenshotImg" src="" alt="Page screenshot"
-        style="width:100%; border-radius:8px; border:0.5px solid #e0e0e0;" />
+          style="width:100%; border-radius:8px; border:0.5px solid #e0e0e0;" />
+      </div>
     </div>
-    </div>
+  </div>
 
   <script>
-  const steps = [
-    'Capturing screenshot...',
-    'Sending to Gemini Vision...',
-    'Analyzing UI patterns...',
-    'Building your report...'
-  ];
+    const steps = [
+      'Capturing screenshot...',
+      'Sending to Gemini Vision...',
+      'Analyzing UI patterns...',
+      'Building your report...'
+    ];
 
-  function show(id) {
-    ['stateIdle','stateLoading','stateError','stateResults'].forEach(s => {
-      document.getElementById(s).classList.add('hidden');
-    });
-    document.getElementById(id).classList.remove('hidden');
-  }
-
-  function scoreLabel(n) {
-    if (n >= 8) return 'Excellent';
-    if (n >= 6) return 'Good';
-    if (n >= 4) return 'Needs Work';
-    return 'Poor';
-  }
-
-  function switchTab(mode) {
-    document.getElementById('urlMode').classList.toggle('hidden', mode !== 'url');
-    document.getElementById('fileMode').classList.toggle('hidden', mode !== 'file');
-    document.getElementById('imageMode').classList.toggle('hidden', mode !== 'image');
-    document.getElementById('tabUrl').classList.toggle('active', mode === 'url');
-    document.getElementById('tabFile').classList.toggle('active', mode === 'file');
-    document.getElementById('tabImage').classList.toggle('active', mode === 'image');
-}
-
-  function updateFileLabel() {
-    const file = document.getElementById('fileInput').files[0];
-    document.getElementById('fileLabel').textContent = file ? file.name : 'No file selected';
-    if (file) document.getElementById('folderLabel').textContent = 'No folder selected';
-  }
-
-  function updateFolderLabel() {
-    const files = document.getElementById('folderInput').files;
-    document.getElementById('folderLabel').textContent = files.length ? files.length + ' files selected' : 'No folder selected';
-    if (files.length) document.getElementById('fileLabel').textContent = 'No file selected';
-  }
-
-  async function startAnalysis() {
-    const url = document.getElementById('urlInput').value.trim();
-    const apiKey = document.getElementById('apiKey').value.trim();
-
-    if (!url || !apiKey) {
-      alert('Please enter both a URL and your Gemini API key.');
-      return;
-    }
-
-    document.getElementById('analyzeBtn').disabled = true;
-    show('stateLoading');
-
-    let step = 0;
-    const ticker = setInterval(() => {
-      step = (step + 1) % steps.length;
-      document.getElementById('loadingText').textContent = steps[step];
-    }, 1800);
-
-    try {
-      const res = await fetch('http://127.0.0.1:5000/analyze', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+    function show(id) {
+      ['stateIdle','stateLoading','stateError','stateResults'].forEach(s => {
+        document.getElementById(s).classList.add('hidden');
       });
-
-      const report = await res.json();
-      if (report.error) throw new Error(report.error);
-
-      clearInterval(ticker);
-      renderReport(report, url);
-
-    } catch (e) {
-      clearInterval(ticker);
-      document.getElementById('errorMsg').textContent = e.message || 'Could not reach the server. Is server.py running?';
-      show('stateError');
-    } finally {
-      document.getElementById('analyzeBtn').disabled = false;
-    }
-  }
-  function updateImageLabel() {
-  const file = document.getElementById('imageInput').files[0];
-  document.getElementById('imageLabel').textContent = file ? file.name : 'No image selected';
-}
-
-async function startImageAnalysis() {
-  const apiKey = document.getElementById('apiKey').value.trim();
-  const image = document.getElementById('imageInput').files[0];
-
-  if (!apiKey || !image) {
-    alert('Please enter your API key and select a screenshot.');
-    return;
-  }
-
-  show('stateLoading');
-
-  let step = 0;
-  const ticker = setInterval(() => {
-    step = (step + 1) % steps.length;
-    document.getElementById('loadingText').textContent = steps[step];
-  }, 1800);
-
-  try {
-    const formData = new FormData();
-    
-
-    formData.append('image', image);
-
-    const res = await fetch('http://127.0.0.1:5000/analyze-image', {
-      method: 'POST',
-      body: formData
-    });
-
-    const report = await res.json();
-    if (report.error) throw new Error(report.error);
-
-    clearInterval(ticker);
-    renderReport(report, image.name);
-
-  } catch (e) {
-    clearInterval(ticker);
-    document.getElementById('errorMsg').textContent = e.message || 'Could not analyze image.';
-    show('stateError');
-  }
-}
-
-  async function startLocalAnalysis() {
-    const apiKey = document.getElementById('apiKey').value.trim();
-    const singleFile = document.getElementById('fileInput').files[0];
-    const folderFiles = document.getElementById('folderInput').files;
-
-    if (!apiKey) {
-      alert('Please enter your Gemini API key.');
-      return;
+      document.getElementById(id).classList.remove('hidden');
     }
 
-    if (!singleFile && !folderFiles.length) {
-      alert('Please select a file or folder.');
-      return;
+    function scoreLabel(n) {
+      if (n >= 8) return 'Excellent';
+      if (n >= 6) return 'Good';
+      if (n >= 4) return 'Needs Work';
+      return 'Poor';
     }
 
-    document.getElementById('analyzeBtnFile').disabled = true;
-    show('stateLoading');
+    function switchTab(mode) {
+      document.getElementById('urlMode').classList.toggle('hidden', mode !== 'url');
+      document.getElementById('fileMode').classList.toggle('hidden', mode !== 'file');
+      document.getElementById('imageMode').classList.toggle('hidden', mode !== 'image');
+      document.getElementById('tabUrl').classList.toggle('active', mode === 'url');
+      document.getElementById('tabFile').classList.toggle('active', mode === 'file');
+      document.getElementById('tabImage').classList.toggle('active', mode === 'image');
+    }
 
-    let step = 0;
-    const ticker = setInterval(() => {
-      step = (step + 1) % steps.length;
-      document.getElementById('loadingText').textContent = steps[step];
-    }, 1800);
+    function updateFileLabel() {
+      const file = document.getElementById('fileInput').files[0];
+      document.getElementById('fileLabel').textContent = file ? file.name : 'No file selected';
+      if (file) document.getElementById('folderLabel').textContent = 'No folder selected';
+    }
 
-    try {
-      const formData = new FormData();
-      
+    function updateFolderLabel() {
+      const files = document.getElementById('folderInput').files;
+      document.getElementById('folderLabel').textContent = files.length ? files.length + ' files selected' : 'No folder selected';
+      if (files.length) document.getElementById('fileLabel').textContent = 'No file selected';
+    }
 
-      let reportName = '';
+    function updateImageLabel() {
+      const file = document.getElementById('imageInput').files[0];
+      document.getElementById('imageLabel').textContent = file ? file.name : 'No image selected';
+    }
 
-      if (singleFile) {
-        formData.append('files', singleFile, singleFile.name);
-        reportName = singleFile.name;
-      } else {
-        for (let i = 0; i < folderFiles.length; i++) {
-          formData.append('files', folderFiles[i], folderFiles[i].webkitRelativePath);
-        }
-        reportName = folderFiles[0].webkitRelativePath.split('/')[0];
+    async function startAnalysis() {
+      const url = document.getElementById('urlInput').value.trim();
+
+      if (!url) {
+        alert('Please enter a URL.');
+        return;
       }
 
-      const res = await fetch('http://127.0.0.1:5000/analyze-folder', {
-        method: 'POST',
-        body: formData
-      });
+      document.getElementById('analyzeBtn').disabled = true;
+      show('stateLoading');
 
-      const report = await res.json();
-      if (report.error) throw new Error(report.error);
+      let step = 0;
+      const ticker = setInterval(() => {
+        step = (step + 1) % steps.length;
+        document.getElementById('loadingText').textContent = steps[step];
+      }, 1800);
 
-      clearInterval(ticker);
-      renderReport(report, reportName);
+      try {
+        const res = await fetch('/analyze', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ url })
+        });
 
-    } catch (e) {
-      clearInterval(ticker);
-      document.getElementById('errorMsg').textContent = e.message || 'Could not analyze.';
-      show('stateError');
-    } finally {
-      document.getElementById('analyzeBtnFile').disabled = false;
+        const report = await res.json();
+        if (report.error) throw new Error(report.error);
+
+        clearInterval(ticker);
+        renderReport(report, url);
+
+      } catch (e) {
+        clearInterval(ticker);
+        document.getElementById('errorMsg').textContent = e.message || 'Could not reach the server.';
+        show('stateError');
+      } finally {
+        document.getElementById('analyzeBtn').disabled = false;
+      }
     }
-  }
 
-  function renderReport(report, name) {
-    document.getElementById('scoreNum').textContent = report.overall_score;
-    document.getElementById('scoreLabel').textContent = scoreLabel(report.overall_score);
-    document.getElementById('scoreUrl').textContent = name;
-    document.getElementById('scoreBar').style.width = (report.overall_score * 10) + '%';
-    document.getElementById('issueCount').textContent = '(' + report.issues.length + ')';
+    async function startImageAnalysis() {
+      const image = document.getElementById('imageInput').files[0];
 
-    const issuesList = document.getElementById('issuesList');
-    issuesList.innerHTML = '';
-    report.issues.forEach(issue => {
-      issuesList.innerHTML += `
-        <div class="issue">
-          <div class="dot dot-${issue.severity}"></div>
-          <div>
-            <div class="issue-meta">
-              <span class="badge badge-${issue.severity}">${issue.severity}</span>
-              <span class="badge badge-type">${issue.type}</span>
+      if (!image) {
+        alert('Please select a screenshot.');
+        return;
+      }
+
+      show('stateLoading');
+
+      let step = 0;
+      const ticker = setInterval(() => {
+        step = (step + 1) % steps.length;
+        document.getElementById('loadingText').textContent = steps[step];
+      }, 1800);
+
+      try {
+        const formData = new FormData();
+        formData.append('image', image);
+
+        const res = await fetch('/analyze-image', {
+          method: 'POST',
+          body: formData
+        });
+
+        const report = await res.json();
+        if (report.error) throw new Error(report.error);
+
+        clearInterval(ticker);
+        renderReport(report, image.name);
+
+      } catch (e) {
+        clearInterval(ticker);
+        document.getElementById('errorMsg').textContent = e.message || 'Could not analyze image.';
+        show('stateError');
+      }
+    }
+
+    async function startLocalAnalysis() {
+      const singleFile = document.getElementById('fileInput').files[0];
+      const folderFiles = document.getElementById('folderInput').files;
+
+      if (!singleFile && !folderFiles.length) {
+        alert('Please select a file or folder.');
+        return;
+      }
+
+      document.getElementById('analyzeBtnFile').disabled = true;
+      show('stateLoading');
+
+      let step = 0;
+      const ticker = setInterval(() => {
+        step = (step + 1) % steps.length;
+        document.getElementById('loadingText').textContent = steps[step];
+      }, 1800);
+
+      try {
+        const formData = new FormData();
+        let reportName = '';
+
+        if (singleFile) {
+          formData.append('files', singleFile, singleFile.name);
+          reportName = singleFile.name;
+        } else {
+          for (let i = 0; i < folderFiles.length; i++) {
+            formData.append('files', folderFiles[i], folderFiles[i].webkitRelativePath);
+          }
+          reportName = folderFiles[0].webkitRelativePath.split('/')[0];
+        }
+
+        const res = await fetch('/analyze-folder', {
+          method: 'POST',
+          body: formData
+        });
+
+        const report = await res.json();
+        if (report.error) throw new Error(report.error);
+
+        clearInterval(ticker);
+        renderReport(report, reportName);
+
+      } catch (e) {
+        clearInterval(ticker);
+        document.getElementById('errorMsg').textContent = e.message || 'Could not analyze.';
+        show('stateError');
+      } finally {
+        document.getElementById('analyzeBtnFile').disabled = false;
+      }
+    }
+
+    function renderReport(report, name) {
+      document.getElementById('scoreNum').textContent = report.overall_score;
+      document.getElementById('scoreLabel').textContent = scoreLabel(report.overall_score);
+      document.getElementById('scoreUrl').textContent = name;
+      document.getElementById('scoreBar').style.width = (report.overall_score * 10) + '%';
+      document.getElementById('issueCount').textContent = '(' + report.issues.length + ')';
+
+      const issuesList = document.getElementById('issuesList');
+      issuesList.innerHTML = '';
+      report.issues.forEach(issue => {
+        issuesList.innerHTML += `
+          <div class="issue">
+            <div class="dot dot-${issue.severity}"></div>
+            <div>
+              <div class="issue-meta">
+                <span class="badge badge-${issue.severity}">${issue.severity}</span>
+                <span class="badge badge-type">${issue.type}</span>
+              </div>
+              <div class="issue-desc">${issue.description}</div>
             </div>
-            <div class="issue-desc">${issue.description}</div>
-          </div>
-        </div>`;
-    });
-
-    const positivesList = document.getElementById('positivesList');
-    positivesList.innerHTML = '';
-    report.positives.forEach(pos => {
-      positivesList.innerHTML += `
-        <div class="positive">
-          <i class="ti ti-check"></i><span>${pos}</span>
-        </div>`;
-    });
-
-    fetch('http://127.0.0.1:5000/screenshot')
-      .then(r => r.json())
-      .then(data => {
-        const img = document.getElementById('screenshotImg');
-        img.src = 'data:image/png;base64,' + data.image;
-        document.getElementById('screenshotCard').classList.remove('hidden');
+          </div>`;
       });
 
-    show('stateResults');
-  }
+      const positivesList = document.getElementById('positivesList');
+      positivesList.innerHTML = '';
+      report.positives.forEach(pos => {
+        positivesList.innerHTML += `
+          <div class="positive">
+            <i class="ti ti-check"></i><span>${pos}</span>
+          </div>`;
+      });
 
-  document.getElementById('urlInput').addEventListener('keydown', e => {
-    if (e.key === 'Enter') startAnalysis();
-  });
-</script>
+      fetch('/screenshot')
+        .then(r => r.json())
+        .then(data => {
+          const img = document.getElementById('screenshotImg');
+          img.src = 'data:image/png;base64,' + data.image;
+          document.getElementById('screenshotCard').classList.remove('hidden');
+        });
+
+      show('stateResults');
+    }
+
+    document.getElementById('urlInput').addEventListener('keydown', e => {
+      if (e.key === 'Enter') startAnalysis();
+    });
+  </script>
 </body>
 </html>
