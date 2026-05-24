@@ -1,7 +1,7 @@
 flask
 flask-cors
 playwright
-google-genai
+google-generativeai
 Pillow
 pdf2image
 gunicorn

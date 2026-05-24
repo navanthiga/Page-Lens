@@ -1,15 +1,16 @@
 from flask import Flask, request, jsonify, send_file
 from flask_cors import CORS
 from playwright.sync_api import sync_playwright
-from google import genai
+import google.generativeai as genai
 from PIL import Image
 import json
 import os
 import base64
 import shutil
 from pdf2image import convert_from_path
+from dotenv import load_dotenv
+load_dotenv()
 
-os.environ["PLAYWRIGHT_BROWSERS_PATH"] = "/root/.cache/ms-playwright"
 
 GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY", "")
 
@@ -73,13 +74,14 @@ def take_screenshot_local(file_path):
         browser.close()
 
 def analyze_screenshot():
-    client = genai.Client(api_key=GEMINI_API_KEY)
+    genai.configure(api_key=GEMINI_API_KEY)
+    model = genai.GenerativeModel("gemini-2.5-flash")
     image = Image.open(SCREENSHOT_PATH)
 
-    response = client.models.generate_content(
-        model="gemini-2.0-flash",
-        contents=[PROMPT, image]
-    )
+    response = model.generate_content([PROMPT, image])
+    raw = response.text.strip()
+    clean = raw.replace("```json", "").replace("```", "").strip()
+    return json.loads(clean)
 
     raw = response.text.strip()
     clean = raw.replace("```json", "").replace("```", "").strip()
