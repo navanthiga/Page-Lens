@@ -1,0 +1,7 @@
+screenshot.png
+uploaded_screenshot.*
+uploaded.html
+uploaded_project/
+__pycache__/
+*.pyc
+.env
