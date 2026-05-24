@@ -85,10 +85,9 @@ def index():
 def analyze():
     data = request.get_json()
     url = data.get("url")
-    api_key = data.get("api_key")
 
-    if not url or not api_key:
-        return jsonify({"error": "Missing url or api_key"}), 400
+    if not url :
+        return jsonify({"error": "Missing url"}), 400
 
     try:
         take_screenshot(url)
@@ -107,11 +106,10 @@ def get_screenshot():
     
 @app.route("/analyze-folder", methods=["POST"])
 def analyze_folder():
-    api_key = request.form.get("api_key")
     files = request.files.getlist("files")
 
-    if not files or not api_key:
-        return jsonify({"error": "Missing files or api_key"}), 400
+    if not files :
+        return jsonify({"error": "Missing files"}), 400
 
     try:
         folder_path = os.path.join(BASE_DIR, "uploaded_project")
@@ -129,7 +127,7 @@ def analyze_folder():
             return jsonify({"error": "No index.html found in uploaded folder"}), 400
 
         take_screenshot_local(index_path)
-        report = analyze_screenshot(api_key)
+        report = analyze_screenshot(GEMINI_API_KEY)
         return jsonify(report)
 
     except Exception as e:
@@ -148,11 +146,10 @@ def find_index(folder_path):
 
 @app.route("/analyze-image", methods=["POST"])
 def analyze_image():
-    api_key = request.form.get("api_key")
     file = request.files.get("image")
 
-    if not file or not api_key:
-        return jsonify({"error": "Missing image or api_key"}), 400
+    if not file :
+        return jsonify({"error": "Missing image "}), 400
 
     try:
         ext = os.path.splitext(file.filename)[1].lower()
@@ -182,18 +179,17 @@ def analyze_image():
             img = Image.open(upload_path)
             img.save(SCREENSHOT_PATH, "PNG")
 
-        report = analyze_screenshot(api_key)
+        report = analyze_screenshot(GEMINI_API_KEY)
         return jsonify(report)
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 @app.route("/analyze-file", methods=["POST"])
 def analyze_file():
-    api_key = request.form.get("api_key")
     file = request.files.get("file")
 
-    if not file or not api_key:
-        return jsonify({"error": "Missing file or api_key"}), 400
+    if not file :
+        return jsonify({"error": "Missing file "}), 400
 
     try:
         file_path = os.path.join(BASE_DIR, "uploaded.html")
@@ -201,7 +197,7 @@ def analyze_file():
 
         take_screenshot_local(file_path)
 
-        report = analyze_screenshot(api_key)
+        report = analyze_screenshot(GEMINI_API_KEY)
         return jsonify(report)
 
     except Exception as e:
