@@ -163,6 +163,3 @@ This project was built as a learning project to practice:
 
 ---
 
-## License
-
-MIT
